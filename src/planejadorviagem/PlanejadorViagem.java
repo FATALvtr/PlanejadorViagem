@@ -69,11 +69,24 @@ public class PlanejadorViagem {
             JOptionPane.showConfirmDialog(null, "O valor não pode ser negativo!");
             return (0);
         }
-        
     }    
-    public static void processar(){
+    public static void processar(double dias, double valor, LocalDate dataViagem){
 //        Calcular o valor total da viagem: 
-//        total = dias * valorPorDia 
+//        total = dias * valorPorDia ]
+        double total = dias * valor; // calculo total de gastos na viagem
+        LocalDate hoje = LocalDate.now(); //Pega a data atual do sistema
+        if (dataViagem.isBefore(hoje)) {
+            JOptionPane.showConfirmDialog(null, "Situação: Viagem Passada");
+        }
+        if (dataViagem.isEqual(hoje)) {
+            JOptionPane.showConfirmDialog(null, "Situação: Viagem é Hoje!");
+        }
+        if (dataViagem.isAfter(hoje)) {
+            JOptionPane.showConfirmDialog(null, "Situação: Viagem Futura");
+            
+            long faltamDias = 
+        }
+        
 //        Verificar se a viagem é: 
 //        Passada 
 //        Hoje 
