@@ -1,12 +1,15 @@
 package planejadorviagem;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.sound.sampled.DataLine;
 import javax.swing.JOptionPane;
 
 public class PlanejadorViagem {
     
     public static void main(String[] args) {
-        
+        planejar();
     }
     public static void menu(){
         //Planejar viagem
@@ -32,12 +35,21 @@ public class PlanejadorViagem {
                   
         String nome = JOptionPane.showInputDialog(null, "Digite o nome do Viajante", "Trip Planner", JOptionPane.QUESTION_MESSAGE);
         if(!campo(nome))return;
-        String data = JOptionPane.showInputDialog(null, "Digite a data de partida: ", "Trip Planner", JOptionPane.QUESTION_MESSAGE);
-        if(!campo(data))return;
+        System.out.println("nome:"+nome);
+        String dataRaw = JOptionPane.showInputDialog(null, "Digite a data de partida: ", "Trip Planner", JOptionPane.QUESTION_MESSAGE);
+        if(!campo(dataRaw))return;
+        LocalDate data = formatarData(dataRaw);
+        System.out.println("data: "+data);
         String dias = JOptionPane.showInputDialog(null, "Quantidades de dias viajando: ", "Trip Planner", JOptionPane.QUESTION_MESSAGE);
-        if(!campo(data))return;
+        if(!campo(dias))return;
+        converter(dias);
+        double diaConvert = converter(dias);
+        System.out.println("dias: "+diaConvert);
         String valor = JOptionPane.showInputDialog(null, "Valor gasto por dia: ", "Trip Planner", JOptionPane.QUESTION_MESSAGE);
-        if(!campo(data))return;
+        if(!campo(valor))return;
+        converter(valor);
+        double valorConvert = converter(valor);
+        System.out.println("valor: "+valorConvert);
     }
     public static boolean campo(String campo){
 //        Campos vazios 
@@ -48,14 +60,16 @@ public class PlanejadorViagem {
             return true; //Esta correto e pode continuar
         }
         
-    }
-    public static double converter(String valor, String data){
-//        Conversão de números (usar parseInt e parseDouble) 
-//        Data válida (usar LocalDate) 
-//        Valores negativos não são permitidos 
-        return Double.parseDouble(valor);
-        LocalDate;
-        date
+    
+    public static double converter(String valor){
+        double numero = Double.parseDouble(valor);
+        if (numero >= 1) {
+            return numero;
+        }else{
+            JOptionPane.showConfirmDialog(null, "O valor não pode ser negativo!");
+            return (0);
+        }
+        
     }    
     public static void processar(){
 //        Calcular o valor total da viagem: 
@@ -73,4 +87,14 @@ public class PlanejadorViagem {
 //        Valor total 
 //        Situação da viagem (passada, hoje ou futura) 
     }
+    public static LocalDate formatarData(String data){
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            return LocalDate.parse(data, formato);
+        } catch (Exception e) {
+            System.out.println("Error: Formato de data invalido!");
+            return null;
+        }
+    }
+    
 }
