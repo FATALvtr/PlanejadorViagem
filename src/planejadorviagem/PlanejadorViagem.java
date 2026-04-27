@@ -3,6 +3,7 @@ package planejadorviagem;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import javax.sound.sampled.DataLine;
 import javax.swing.JOptionPane;
 
@@ -50,6 +51,9 @@ public class PlanejadorViagem {
         converter(valor);
         double valorConvert = converter(valor);
         System.out.println("valor: "+valorConvert);
+        
+        processar(diaConvert, valorConvert, data, nome);
+        
     }
     public static boolean campo(String campo){
 //        Campos vazios 
@@ -70,31 +74,48 @@ public class PlanejadorViagem {
             return (0);
         }
     }    
-    public static void processar(double dias, double valor, LocalDate dataViagem){
+    public static void processar(double dias, double valor, LocalDate dataViagem,String nome){
 //        Calcular o valor total da viagem: 
 //        total = dias * valorPorDia ]
         double total = dias * valor; // calculo total de gastos na viagem
         LocalDate hoje = LocalDate.now(); //Pega a data atual do sistema
+        String situacao = "";
         if (dataViagem.isBefore(hoje)) {
-            JOptionPane.showConfirmDialog(null, "Situação: Viagem Passada");
+            situacao = "Viagem Passada";
+            JOptionPane.showConfirmDialog(null, "Situação: "+situacao);
         }
         if (dataViagem.isEqual(hoje)) {
-            JOptionPane.showConfirmDialog(null, "Situação: Viagem é Hoje!");
+            situacao = "Viagem é Hoje!";
+            JOptionPane.showConfirmDialog(null, "Situação: "+situacao);
         }
         if (dataViagem.isAfter(hoje)) {
-            JOptionPane.showConfirmDialog(null, "Situação: Viagem Futura");
+            situacao = "Viagem Futura";
+            JOptionPane.showConfirmDialog(null, "Situação: "+situacao);
             
-            long faltamDias = 
+            long faltamDias = ChronoUnit.DAYS.between(hoje, dataViagem);
+            JOptionPane.showMessageDialog(null, "Situação: Viagem Futura\nFaltam " + faltamDias + " dias!");
         }
         
-//        Verificar se a viagem é: 
-//        Passada 
-//        Hoje 
-//        Futura 
-//        Se for futura, calcular quantos dias faltam 
+        resultado(nome, dataViagem, dias, total, situacao);
+
     }
-    public static void resultado(){
-//        Nome 
+    public static void resultado(String nome, LocalDate dataViagem, double dias, double valorTotal, String situacao) {
+    
+    // Formatando a data para o padrão brasileiro ao exibir
+    DateTimeFormatter formatoBR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    String dataFormatada = dataViagem.format(formatoBR);
+
+    String mensagem = String.format(
+        "RESUMO DA VIAGEM\n\n" +
+        "Viajante: %s\n" +
+        "Data da viagem: %s\n" +
+        "Dias viajando: %.0f\n" +
+        "Valor total: R$ %.2f\n" +
+        "Situação: %s", 
+        nome, dataFormatada, dias, valorTotal, situacao
+    );
+
+    JOptionPane.showMessageDialog(null, mensagem, "Resultado Final", JOptionPane.INFORMATION_MESSAGE);
 //        Data da viagem 
 //        Dias de viagem 
 //        Valor total 
