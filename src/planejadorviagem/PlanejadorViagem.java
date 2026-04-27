@@ -13,27 +13,18 @@ public class PlanejadorViagem {
         planejar();
     }
     public static void menu(){
-        //Planejar viagem
-        //Sair
         String opcao[] = {"Planejar Viagem", "Sair"};
         int escolher = JOptionPane.showOptionDialog(null, "Planejar Viagem", "Trip Planner", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcao, opcao[0]);
         if (escolher == 0) {
+        //Planejar viagem
             planejar();
         }else{
+        //Sair
             JOptionPane.showMessageDialog(null, "SISTEMA FINALIZADO", "Trip Planner", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     public static void planejar(){
-        //dados
-//        Nome do viajante 
-//        Data da viagem no formato dd/MM/yyyy 
-//        Quantidade de dias de viagem (inteiro) 
-//        Valor gasto por dia (decimal) 
-//        String nome;
-//        String data;
-//        int dias;
-//        double valor;
-                  
+        //dados    
         String nome = JOptionPane.showInputDialog(null, "Digite o nome do Viajante", "Trip Planner", JOptionPane.QUESTION_MESSAGE);
         if(!campo(nome))return;
         System.out.println("nome:"+nome);
@@ -76,7 +67,7 @@ public class PlanejadorViagem {
     }    
     public static void processar(double dias, double valor, LocalDate dataViagem,String nome){
 //        Calcular o valor total da viagem: 
-//        total = dias * valorPorDia ]
+//        total = dias * valorPorDia 
         double total = dias * valor; // calculo total de gastos na viagem
         LocalDate hoje = LocalDate.now(); //Pega a data atual do sistema
         String situacao = "";
@@ -116,10 +107,7 @@ public class PlanejadorViagem {
     );
 
     JOptionPane.showMessageDialog(null, mensagem, "Resultado Final", JOptionPane.INFORMATION_MESSAGE);
-//        Data da viagem 
-//        Dias de viagem 
-//        Valor total 
-//        Situação da viagem (passada, hoje ou futura) 
+
     }
     public static LocalDate formatarData(String data){
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
