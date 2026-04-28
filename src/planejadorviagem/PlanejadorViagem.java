@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 public class PlanejadorViagem {
     
     public static void main(String[] args) {
-        planejar();
+        menu();
     }
     public static void menu(){
         String opcao[] = {"Planejar Viagem", "Sair"};
